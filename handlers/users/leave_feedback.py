@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from data.config import departments
+from data.config import ADMINS
 from loader import dp, bot
 from states.department_feedback import LeaveFeedback
 
@@ -33,8 +33,8 @@ async def feedback_handler(message: types.Message, state: FSMContext):
         msg = f"<b>Shikoyatingiz uchun Rahmat!</b>\n\nShikoyatingiz sir saqlangan holda <b>PDP Academy</b> jamoasiga yetkazildi va tez orada ko'rib chiqiladi.\nYana shikoyatingizjusdd bo'lsa /feedback komandasini kiriting"
         admin_msg = f"<b>❌ Shikoyat</b>\n{message.text}"
     await message.answer(msg, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
-    try:
-        for department in departments:
+    for department in ADMINS:
+        try:
             await bot.send_message(department, admin_msg, parse_mode="HTML", reply_markup=ReplyKeyboardRemove())
-    except Exception:
-        pass
+        except Exception:
+            pass
